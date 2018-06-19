@@ -1,0 +1,15 @@
+{
+    "name": "bemang/renderer-system",
+    "type": "library",
+    "license": "\"GPL-3.0-or-later\"",
+    "minimum-stability": "dev",
+    "require": {
+        "bemang/cache-system": "1.*.*",
+        "twig/twig": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "bemang\\renderer\\": "src"
+        }
+    }
+}
