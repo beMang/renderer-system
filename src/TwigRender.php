@@ -55,24 +55,33 @@ class TwigRender implements RendererInterface
         return $twig->render($view, $datas);
     }
 
-    public function addExtensions(array $extensions)
+    public function addTwigExtensions(array $extensions)
     {
         if ($this->checkExtensions($extensions) === true) {
-            $this->twigExtensions = array_merge($extensions, $twigExtensions);
+            $this->twigExtensions = array_merge($extensions, $this->twigExtensions);
         } else {
             throw new InvalidArgumentException('Une extension est invalide');
         }
     }
 
-    private function checkExtensions(array $extensions) :bool
+    protected function checkExtensions(array $extensions) :bool
     {
-        $result = true;
         foreach ($extensions as $extension) {
-            if (!class_exists($extension) || !$extension instanceof \Twig_Extension) {
-                $result = false;
+            if ($this->checkOneExtension($extension) === false) {
+                return false;
             }
         }
-        return $result;
+        return true;
+    }
+
+    protected function checkOneExtension(string $extension) :bool
+    {
+        if (!class_exists($extension)) {
+            return false;
+        } else {
+            $reflection = new \ReflectionClass($extension);
+            return $reflection->isSubclassOf(\Twig_Extension::class);
+        }
     }
 
     public function getExtensions() : array
@@ -80,7 +89,7 @@ class TwigRender implements RendererInterface
         return $this->twigExtensions;
     }
 
-    private function checkPath(string $basePath) :bool
+    protected function checkPath(string $basePath) :bool
     {
         if (is_dir($basePath)) {
             return true;
