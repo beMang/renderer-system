@@ -42,9 +42,9 @@ class PHPRender implements RendererInterface
         extract($datas);
         ob_start();
         require($fileToRender);
-        $result = ob_get_clean();
+        $content = ob_get_contents();
         ob_end_clean();
-        return $result;
+        return $content;
     }
 
     protected function cacheRender(string $view, array $datas) :string
@@ -60,7 +60,7 @@ class PHPRender implements RendererInterface
             ob_start();
             extract($datas);
             require $fileToRender;
-            $content = ob_get_clean();
+            $content = ob_get_contents();
             ob_end_clean();
             $cache->set(self::CACHE_NAME . $view, $content);
             return $content;
