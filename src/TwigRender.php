@@ -33,8 +33,8 @@ class TwigRender implements RendererInterface
 
     protected function classicTwigRender(string $view, array $datas)
     {
-        $loaderTwig = new \Twig_Loader_Filesystem($this->basePath);
-        $twig = new \Twig_Environment($loaderTwig, [
+        $twigLoader = new \Twig_Loader_Filesystem($this->basePath);
+        $twig = new \Twig_Environment($twigLoader, [
             'cache' => false
         ]);
         foreach ($this->twigExtensions as $extension) {
@@ -45,8 +45,8 @@ class TwigRender implements RendererInterface
 
     protected function cacheTwigRender($view, $datas)
     {
-        $loaderTwig = new \Twig_Loader_Filesystem($this->basePath);
-        $twig = new \Twig_Environment($loaderTwig, [
+        $twigLoader = new \Twig_Loader_Filesystem($this->basePath);
+        $twig = new \Twig_Environment($twigLoader, [
             'cache' => $this->cachePath
         ]);
         foreach ($this->twigExtensions as $extension) {
