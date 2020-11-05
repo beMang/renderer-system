@@ -21,6 +21,14 @@ class PHPRenderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('<h1>hello world</h1>', $result);
     }
 
+    public function testExceptionForWrongPath()
+    {
+        $this->expectExceptionMessage('Le chemin de base ou de cache n\'est pas un dossier');
+        $render = new PHPRender('wrong_path', self::CACHE_PATH);
+        $this->expectExceptionMessage('Le chemin de base ou de cache n\'est pas un dossier');
+        $render = new PHPRender(self::BASE_PATH, 'wrong_path');
+    }
+
     public function testRenderWithInexistantView()
     {
         $render = new PHPRender(self::BASE_PATH, self::CACHE_PATH);
