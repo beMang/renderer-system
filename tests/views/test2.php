@@ -1,1 +1,1 @@
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta beatae sunt nihil fuga unde iste error, ab suscipit molestias at? Aspernatur nobis earum velit repellat iusto harum expedita ad fugiat.
+{{ test() }}

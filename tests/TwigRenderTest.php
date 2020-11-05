@@ -36,4 +36,29 @@ class TwigRenderTest extends \PHPUnit\Framework\TestCase
         $this->expectException(\Twig\Error\Error::class);
         $render->render($view, []);
     }
+
+    public function testCacheRender()
+    {
+        $render = new TwigRender(self::BASE_PATH, self::CACHE_PATH);
+        $result = $render->render('test1.php', [], true);
+        $this->assertEquals('<h1>hello world</h1>', $result);
+    }
+
+    public function testExtension()
+    {
+        $render = new TwigRender(self::BASE_PATH, self::CACHE_PATH);
+        $render->addTwigExtensions([TwigExtension::class]);
+        $this->assertEquals('Extension is working', $render->render('test2.php', []));
+
+        $render = new TwigRender(self::BASE_PATH, self::CACHE_PATH);
+        $render->addTwigExtensions([TwigExtension::class]);
+        $this->assertEquals('Extension is working', $render->render('test2.php', [], true));
+    }
+
+    public function testInvalidExtension()
+    {
+        $render = new TwigRender(self::BASE_PATH, self::CACHE_PATH);
+        $this->expectExceptionMessage('Une extension est invalide');
+        $render->addTwigExtensions([TwigRender::class]);
+    }
 }

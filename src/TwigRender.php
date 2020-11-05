@@ -81,7 +81,7 @@ class TwigRender implements RendererInterface
         if (!class_exists($extension)) {
             return false;
         } else {
-            $reflection = new ReflectionClass($extension);
+            $reflection = new \ReflectionClass($extension);
             return $reflection->isSubclassOf(\Twig\Extension\AbstractExtension::class);
         }
     }
