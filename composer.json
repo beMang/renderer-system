@@ -5,7 +5,7 @@
     "minimum-stability": "dev",
     "require": {
         "bemang/cache-system": "1.*.*",
-        "twig/twig": "2.*"
+        "twig/twig": "3.*"
     },
     "autoload": {
         "psr-4": {

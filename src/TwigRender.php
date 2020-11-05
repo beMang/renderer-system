@@ -3,6 +3,8 @@
 namespace bemang\renderer;
 
 use bemang\renderer\Exception\InvalidArgumentException;
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
 
 class TwigRender implements RendererInterface
 {
@@ -33,8 +35,8 @@ class TwigRender implements RendererInterface
 
     protected function classicTwigRender(string $view, array $datas)
     {
-        $twigLoader = new \Twig_Loader_Filesystem($this->basePath);
-        $twig = new \Twig_Environment($twigLoader, [
+        $twigLoader = new FilesystemLoader($this->basePath);
+        $twig = new Environment($twigLoader, [
             'cache' => false
         ]);
         foreach ($this->twigExtensions as $extension) {
@@ -45,8 +47,8 @@ class TwigRender implements RendererInterface
 
     protected function cacheTwigRender($view, $datas)
     {
-        $twigLoader = new \Twig_Loader_Filesystem($this->basePath);
-        $twig = new \Twig_Environment($twigLoader, [
+        $twigLoader = new FilesystemLoader($this->basePath);
+        $twig = new Environment($twigLoader, [
             'cache' => $this->cachePath
         ]);
         foreach ($this->twigExtensions as $extension) {
@@ -79,8 +81,8 @@ class TwigRender implements RendererInterface
         if (!class_exists($extension)) {
             return false;
         } else {
-            $reflection = new \ReflectionClass($extension);
-            return $reflection->isSubclassOf(\Twig_Extension::class);
+            $reflection = new ReflectionClass($extension);
+            return $reflection->isSubclassOf(\Twig\Extension\AbstractExtension::class);
         }
     }
 
